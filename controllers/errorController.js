@@ -38,7 +38,7 @@ const sendErrorDev = (err, req, res) => {
 
   // B) RENDERED WEBSITE
   console.error("ERROR 💥", err);
-  return res.status(err.statusCode).render("web/error", {
+  return res.status(err.statusCode).render("error", {
     title: "Something went wrong!",
     msg: err.message,
   });
@@ -77,7 +77,7 @@ const sendErrorProd = (err, req, res) => {
   // 1) Log error
   console.error("ERROR 💥", err);
   // 2) Send generic message
-  return res.status(err.statusCode).render("web/error", {
+  return res.status(err.statusCode).render("error", {
     title: "Something went wrong!",
     msg: "Please try again later.",
   });

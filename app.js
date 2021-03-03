@@ -16,6 +16,10 @@ const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 
 // Routers
+const viewRouter = require("./routes/viewRoutes");
+const companyRouter = require("./routes/companyRoutes");
+const branchRouter = require("./routes/branchRoutes");
+const userRouter = require("./routes/userRoutes");
 
 // Start Express App
 const app = express();
@@ -71,6 +75,11 @@ app.use((req, res, next) => {
 });
 
 // MOUNTING ROUTERS
+
+app.use("/admin", viewRouter);
+app.use("/api/v1/companies", companyRouter);
+app.use("/api/v1/branches", branchRouter);
+app.use("/api/v1/users", userRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl}`, 404));
