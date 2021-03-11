@@ -1,0 +1,33 @@
+extends base
+
+block content
+
+    main.col-md-9.ml-sm-auto.col-lg-10.px-md-4(role='main')
+        .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+            h1.h2 Customers
+            .btn-toolbar.mb-2.mb-md-0
+                .btn-group.mr-2
+                    a.btn.btn-sm.btn-outline-secondary(href='/admin/customers/add') Add Customer
+            //- .btn-toolbar.mb-2.mb-md-0
+            //-     .btn-group.mr-2
+            //-         button.btn.btn-sm.btn-outline-secondary(type='button') Share
+            //-         button.btn.btn-sm.btn-outline-secondary(type='button') Export
+            //-     button.btn.btn-sm.btn-outline-secondary.dropdown-toggle(type='button')
+            //-         span(data-feather='calendar')
+            //-         |             This week
+        .table-responsive
+            table.table.table-striped.table-sm
+                thead
+                    tr
+                        th Name
+                        th Phone Number
+                        th Amount Owed
+                        th Edit
+                tbody
+                    each customer in customers
+                        tr
+                            td= customer.name
+                            td= customer.phoneNumber
+                            td= `GHS ${customer.amountOwed}`
+                            td
+                                a(href=`/admin/customers/${customer.slug}`) Edit

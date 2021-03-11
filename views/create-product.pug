@@ -1,0 +1,38 @@
+extends base
+
+block content
+    main.col-md-9.ml-sm-auto.col-lg-10.px-md-4(role='main')
+        .container
+            h2 Create Product
+            .row
+                .col-md-8.order-md-1
+                    form.productForm.needs-validation(novalidate='' enctype="multipart/form-data")
+                        .mb-3
+                            label(for='title') Name of Product
+                            .input-group
+                                input#title.form-control(type='text' placeholder='Name' required='' name='title')
+                                .invalid-feedback(style='width: 100%;')
+                                    | Your username is required.
+                        .mb-3
+                            label(for='price') Retail Price
+                            input#price.form-control(type='text' placeholder='10' required='' )
+                            .invalid-feedback
+                        .mb-3
+                            label(for='stockQuantity')
+                                | Stock Qunatity
+                                span.text-muted
+                            input#stockQuantity.form-control(type='text' placeholder='8' )
+                        .form-group
+                            label(for='categories') Category
+                            select#categories.form-control
+                                each category in categories
+                                    option.category(data-id=category.id)= category.title
+                                    
+                        .form-group
+                            label(for='visibility') Is Visibile
+                            select#visibility.form-control
+                                option.visible(data-bool='yes' selected) Yes
+                                option.visible(data-bool='no') No
+                        .row
+                            button.btn.btn-primary.btn-lg.btn-block(type='submit') Upload
+

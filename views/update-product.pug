@@ -1,0 +1,49 @@
+extends base
+
+block content
+    main.col-md-9.ml-sm-auto.col-lg-10.px-md-4(role='main')
+        .container
+            br
+            br
+            a.btn.btn-danger.btn-lg(href=`/admin/products/${product.slug}/delete`) Delete Product
+            .py-5.text-center
+                h2 Update Product form
+            .row
+                .col-md-8.order-md-1
+                    form.productForm.needs-validation(novalidate='' data-id=product.id enctype="multipart/form-data")
+                        .mb-3
+                            label(for='title') Name of Product
+                            .input-group
+                                input#title.form-control(type='text' placeholder='Name' required='' value=`${product.title}` name='title')
+                                .invalid-feedback(style='width: 100%;')
+                                    | Your username is required.
+                        .mb-3
+                            label(for='price') Retail Price
+                            input#price.form-control(type='number' placeholder='0' required='' value=`${product.price}`)
+                            .invalid-feedback
+                        .mb-3
+                            label(for='stockQuantity')
+                                | Stock Qunatity
+                                span.text-muted
+                            input#stockQuantity.form-control(type='number' placeholder='0' value=`${product.stockQuantity}`)
+                        .form-group
+                            label(for='categories') Category
+                            select#categories.form-control
+                                each category in categories
+                                    - if(category.id === product.category.id)
+                                        option.category(data-id=category.id selected)= category.title
+                                    - if(category.id !== product.category.id)
+                                        option.category(data-id=category.id)= category.title
+                        .form-group
+                            label(for='visibility') Is Visibile
+                            select#visibility.form-control
+                                - if(product.isVisible)
+                                    option.visible(data-bool='yes' selected) Yes
+                                    option.visible(data-bool='no') No
+                                -if(!product.isVisible)
+                                    option.visible(data-bool='yes') Yes
+                                    option.visible(data-bool='no' selected) No
+
+                        .row
+                            button.btn.btn-primary.btn-lg.btn-block(type='submit') Upload
+

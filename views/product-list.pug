@@ -1,0 +1,29 @@
+extends base
+
+block content
+
+    main.col-md-9.ml-sm-auto.col-lg-10.px-md-4(role='main')
+        .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+            h1.h2= `${products[0].category.title}`
+            .btn-toolbar.mb-2.mb-md-0
+                .btn-group.mr-2
+                    a.btn.btn-sm.btn-outline-secondary(href='/admin/products/add') Add Product
+        .table-responsive
+            table.table.table-striped.table-sm
+                thead
+                    tr
+                        th Title
+                        th Price
+                        th Stock Quantity
+                        th Edit
+                        th Delete
+                tbody
+                    each product in products
+                        tr                           
+                            td= product.title
+                            td= product.price
+                            td= product.stockQuantity
+                            td
+                                a(href=`/admin/products/${product.slug}`) Edit 
+                            td
+                                a(href=`/admin/products/${product.slug}/delete`) Delete

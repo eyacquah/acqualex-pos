@@ -1,0 +1,54 @@
+extends base
+
+block content
+    main.col-md-9.ml-sm-auto.col-lg-10.px-md-4(role='main')
+        // FORM
+        .container
+            .row.jumbotron
+                .col-md-4.order-md-2.mb-4
+                    h4.d-flex.justify-content-between.align-items-center.mb-3
+                        span.text-muted= order.customer.name
+                        span.numOfItems.badge.badge-secondary.badge-pill 
+                    ul.list-group.mb-3
+                        .refundItemsContainer
+                        li.list-group-item.d-flex.justify-content-between
+                            span Total (GHS)
+                            strong.refundTotal GHS 0
+                .col-md-8.order-md-1
+                    h4.mb-3= `Refund Order ${order.orderNum} --${order.type}`
+                    p
+                    strong Order Total: 
+                    | GHS #{order.totalAmount}
+                    p
+                    strong Amount Paid: 
+                    | GHS #{order.amountPaid}
+                    p
+                    strong Discount: 
+                    | GHS #{order.discount}
+                    p
+                    strong Date: 
+                    | #{order.date}
+                    br
+                    br
+                    form.refundForm.needs-validation(data-branch=order.branch data-user=user.id)
+                        .row
+                            each product in order.products
+                                .input-group.mb-3
+                                    input.form-control(type='text' aria-label='Text input with checkbox' value=product.type.title)
+                                    input.products.form-control(type='number' aria-label='Text input with checkbox' value=`0` min='0' max=`${product.orderQuantity}` data-id=product.type.id data-title=product.type.title data-price=`${product.purchasePrice || product.type.price}`)
+                                    .input-group-prepend
+                                        .input-group-text
+                                            input.addToRefundCart(name='products' type='checkbox' aria-label='Checkbox for following text input' data-id=product.type.id)
+                        br
+                        br
+                        
+                        h6 Enter Amount Refunded: 
+                        .mb-3
+                            label(for='totalAmountRefunded')
+                            .input-group
+                                input#totalAmountRefunded.form-control(type='number' placeholder='0' required='' min=`0` max=`${order.totalAmount}`)
+                                .invalid-feedback(style='width: 100%;')
+                                    | A Refund Amount is Required.
+                        button.btn.btn-danger.btn-lg.btn-block(type='submit')
+                            | Add Refund
+

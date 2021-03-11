@@ -5,7 +5,7 @@ nav.navbar.navbar-dark.sticky-top.bg-dark.flex-md-nowrap.p-0.shadow
   input.form-control.form-control-dark.w-100(type='text' placeholder='Search' aria-label='Search')
   ul.navbar-nav.px-3
     li.nav-item.text-nowrap
-      a.nav-link(href='#') Sign out
+      a.logout.nav-link(href='#') Sign out
 .container-fluid
   .row
     nav#sidebarMenu.col-md-3.col-lg-2.d-md-block.bg-light.sidebar.collapse
@@ -13,25 +13,26 @@ nav.navbar.navbar-dark.sticky-top.bg-dark.flex-md-nowrap.p-0.shadow
         ul.nav.flex-column
           li.nav-item
             a.nav-link.active(href='#')
+              i.house-door-fill
               span(data-feather='home')
               |                   Dashboard 
               span.sr-only (current)
           li.nav-item
-            a.nav-link(href='#')
+            a.nav-link(href='/admin/orders/all')
               span(data-feather='file')
               |                   Orders
           li.nav-item
-            a.nav-link(href='#')
+            a.nav-link(href='/admin/categories/all')
               span(data-feather='shopping-cart')
               |                   Products
           li.nav-item
-            a.nav-link(href='#')
+            a.nav-link(href='/admin/customers/all')
               span(data-feather='users')
               |                   Customers
           li.nav-item
-            a.nav-link(href='#')
+            a.nav-link(href='/admin/branches/all')
               span(data-feather='bar-chart-2')
-              |                   Reports
+              |                  Branches
           li.nav-item
             a.nav-link(href='#')
               span(data-feather='layers')
@@ -59,9 +60,9 @@ nav.navbar.navbar-dark.sticky-top.bg-dark.flex-md-nowrap.p-0.shadow
               |                   Year-end sale
     main.col-md-9.ml-sm-auto.col-lg-10.px-md-4(role='main')
       .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
-        h1.h2 Hello Priscilla,
+        h1.h2= `Hello ${user.name.split(' ')[0]}`
         .btn-toolbar.mb-2.mb-md-0
           .btn-group(role='group' aria-label='Third group')
-            a.btn.btn-sm.btn-outline-dark(href='order-form.html' role='button') Create Sale
+            a.btn.btn-sm.btn-outline-dark(href='/admin/orders/add' role='button') Create Order
           .btn-group(role='group' aria-label='Third group')
-            a.btn.btn-sm.btn-outline-danger(href='refund-form.html' role='button') Add Refund
+            a.btn.btn-sm.btn-outline-danger(href='/admin/refunds/add' role='button') Add Refund

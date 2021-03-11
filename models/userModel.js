@@ -72,7 +72,7 @@ const userSchema = new mongoose.Schema(
 userSchema.pre(/^find/, async function (next) {
   this.populate({
     path: "branch",
-    select: "name",
+    // select: "name",
   });
   next();
 });

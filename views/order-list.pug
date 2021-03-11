@@ -1,0 +1,30 @@
+extends base
+
+block content
+
+    main.col-md-9.ml-sm-auto.col-lg-10.px-md-4(role='main')
+        .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+            h1.h2 Orders
+            .btn-toolbar.mb-2.mb-md-0
+                .btn-group.mr-2
+                    a.btn.btn-sm.btn-outline-secondary(href='/admin/orders/add') Add Order
+        .table-responsive
+            table.table.table-striped.table-sm
+                thead
+                    tr
+                        th Order Number
+                        th Date
+                        th Customer
+                        th Order Total
+                        th Amount Owed
+                        th Edit
+                tbody
+                    each order in orders
+                        tr
+                            td= order.orderNum
+                            td= order.date
+                            td= order.customer.name
+                            td= `GHS ${order.totalAmount}`
+                            td= `GHS ${order.totalAmount - order.amountPaid}`
+                            td
+                                a(href=`/admin/orders/${order.id}`) Edit

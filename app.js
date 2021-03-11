@@ -20,6 +20,10 @@ const viewRouter = require("./routes/viewRoutes");
 const companyRouter = require("./routes/companyRoutes");
 const branchRouter = require("./routes/branchRoutes");
 const userRouter = require("./routes/userRoutes");
+const categoryRouter = require("./routes/categoryRoutes");
+const productRouter = require("./routes/productRoutes");
+const customerRouter = require("./routes/customerRoutes");
+const orderRouter = require("./routes/orderRoutes");
 
 // Start Express App
 const app = express();
@@ -33,7 +37,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // 1. Global Middlewares
 
 // Set http headers
-app.use(helmet());
+app.use(helmet({ contentSecurityPolicy: false }));
 
 // DEV LOG
 if (process.env.NODE_ENV === "development") {
@@ -80,6 +84,10 @@ app.use("/admin", viewRouter);
 app.use("/api/v1/companies", companyRouter);
 app.use("/api/v1/branches", branchRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/customers", customerRouter);
+app.use("/api/v1/categories", categoryRouter);
+app.use("/api/v1/products", productRouter);
+app.use("/api/v1/orders", orderRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl}`, 404));

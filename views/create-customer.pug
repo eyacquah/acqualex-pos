@@ -1,0 +1,25 @@
+extends base
+
+block content
+
+    main.col-md-9.ml-sm-auto.col-lg-10.px-md-4(role='main')
+        .container
+            .py-5.text-center
+                h2 Add A Customer
+            .row
+                .col-md-8.order-md-1
+                    form.customerForm.needs-validation(novalidate='')
+                        .mb-3.form-group
+                            label(for='name') Customer Name
+                            .input-group
+                                input#name.form-control(type='text' placeholder='Name' required='')
+                                .invalid-feedback(style='width: 100%;')
+                                    | A Customer Name is Required.
+                        .mb-3.form-group
+                            label(for='phoneNumber') Phone Number
+                            .input-group
+                                input#phoneNumber.form-control(type='text' placeholder='Phone Number' required='')
+                                .invalid-feedback(style='width: 100%;')
+                                    | A Customer Phone Number is Required.
+                        button.btn.btn-primary.btn-lg.btn-block(type='submit') Save
+

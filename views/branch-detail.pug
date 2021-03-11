@@ -1,0 +1,24 @@
+extends base
+
+block content
+
+    main.col-md-9.ml-sm-auto.col-lg-10.px-md-4(role='main')
+        .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+            h1.h2= branch.name
+            .btn-toolbar.mb-2.mb-md-0
+                .btn-group.mr-2
+                    a.btn.btn-sm.btn-outline-secondary(href=`/admin/branches/${branch.slug}/products/add`) Add Products
+        .table-responsive
+            table.table.table-striped.table-sm
+                thead
+                    tr
+                        th Product
+                        th Branch Qty
+                        th Warehouse Qty
+                tbody
+                    each product in branch.products
+                        tr
+                            td= product.type.title
+                            td= product.stockQuantity
+                            td= product.type.stockQuantity
+                            

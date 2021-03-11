@@ -1,0 +1,38 @@
+extends base
+
+block content
+
+    main.col-md-9.ml-sm-auto.col-lg-10.px-md-4(role='main')
+        .container
+            .py-5.text-center
+                h2= branch.name
+                .btn-toolbar.mb-2.mb-md-0
+                    .btn-group.mr-2
+                        a.btn.btn-sm.btn-outline-secondary(href=`/admin/branches/${branch.slug}/products/add`) Add Products
+            .row
+                .col-md-8.order-md-1
+                    form.addProductsForm(data-id=branch.id)
+                        //- BRANCH
+                        each product in branch.products
+                            .input-group.mb-3
+                                .input-group-prepend
+                                    .input-group-text
+                                        input(name='products' type='checkbox' aria-label='Checkbox for following text input' checked)
+                                input.form-control(type='text' aria-label='Text input with checkbox' value=`${product.type.title}`)
+                                //- label(for=product.id) 
+                                input.branchProducts.form-control(type='number' aria-label='Text input with checkbox' value=`0` min=`0` max=`${product.type.stockQuantity}` name='stockQuantity' data-id=product.type._id data-curr-branch-stock=product.stockQuantity data-curr-warehouse-stock=product.type.stockQuantity)
+
+                        //- REMAINDER
+                        each product in products
+                            - if(!product.checked)
+                                .input-group.mb-3
+                                    .input-group-prepend
+                                        .input-group-text
+                                            input.checkbox(name='products' type='checkbox' aria-label='Checkbox for following text input' data-id=product.id )
+                                    input.form-control(type='text' aria-label='Text input with checkbox' value=`${product.title}`)
+                                    //- label(for=product.id) 
+                                    input.otherProducts.stocks.form-control(type='number' aria-label='Text input with checkbox' value=`0` min='0' max=`${product.stockQuantity}` name='stockQuantity' data-id=product.id data-curr-warehouse-stock=product.stockQuantity)
+
+                        br
+                        br
+                        button.btn.btn-primary.btn-lg.btn-block(type='submit') Save

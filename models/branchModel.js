@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const slugify = require("slugify");
 
 const branchSchema = new mongoose.Schema(
   {
@@ -7,16 +8,16 @@ const branchSchema = new mongoose.Schema(
       required: [true, "A branch must have a name"],
       trim: true,
     },
-    location: {
-      type: String,
-      required: [true, "A branch must have a location"],
-      trim: true,
-    },
-    company: {
-      type: mongoose.Schema.ObjectId,
-      ref: "Company",
-      required: [true, "A branch must belong to a company"],
-    },
+    slug: String,
+    products: [
+      {
+        type: {
+          type: mongoose.Schema.ObjectId,
+          ref: "Product",
+        },
+        stockQuantity: Number,
+      },
+    ],
   },
   {
     toJSON: { virtuals: true },
@@ -24,11 +25,16 @@ const branchSchema = new mongoose.Schema(
   }
 );
 
-// Query Middleware
-branchSchema.pre(/^find/, async function (next) {
+// Document Middleware
+branchSchema.pre("save", function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+branchSchema.pre(/^find/, function (next) {
   this.populate({
-    path: "company",
-    select: "name location",
+    path: "products.type",
+    select: "title price stockQuantity",
   });
   next();
 });

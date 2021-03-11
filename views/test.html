@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- .productSearchResults
+            .input-group.mb-3
+                .input-group-prepend
+                    .input-group-text
+                        input.checkbox(name='products' type='checkbox' aria-label='Checkbox for following text input' data-id=1)
+                input.form-control(type='text' aria-label='Text input with checkbox' value=`title`)
+                //- label(for=product.id) 
+                input.otherProducts.stocks.form-control(type='number' aria-label='Text input with checkbox' value=`0` min='0' max=`${1}` name='stockQuantity' data-id=1 data-curr-warehouse-stock=1) -->
+    <div class="productSearchResults">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <input class="checkbox" type="checkbox" data-id="1" />
+          </div>
+        </div>
+        <input class="form-control" type="text" value="title" />
+        <input
+          class="otherProducts form-control"
+          type="number"
+          value="0"
+          min="0"
+          max="0"
+          data-id="1"
+          data-curr-warehouse-stock="1"
+        />
+      </div>
+    </div>
+
+    <!-- CUSTOMER -->
+    <!-- .list-group
+      a.list-group-item.list-group-item-action(href='#') A second link item -->
+    <div class="list-group">
+      <a
+        class="list-group-item list-group-item-action"
+        href="#"
+        data-name="customerName"
+      >
+        Customer Name
+      </a>
+    </div>
+
+    <!-- END -->
+
+    <!-- START -->
+    <!-- li.list-group-item.d-flex.justify-content-between.lh-condensed
+      div
+          h6.my-0 Product name x2
+          small.text-muted Brief description
+      span.text-muted GHS 45 -->
+    <li class="list-group-item d-flex justify-content-between lh-condensed">
+      <div>
+        <h6 class="my-0">Product Name x2</h6>
+      </div>
+      <span class="text-muted">GHS 45</span>
+    </li>
+    <!-- END -->
+
+    <!-- START -->
+    <!-- li.list-group-item.d-flex.justify-content-between.bg-light
+        .text-success
+            h6.my-0 Discount
+            small EXAMPLECODE
+        span.text-success -GHS 5 -->
+
+    <li class="list-group-item d-flex justify-content-between bg-light">
+      <div class="text-success">
+        <h6 class="my-0">Discount</h6>
+        <span class="text-success"> -GHS 5</span>
+      </div>
+    </li>
+
+    <!-- END -->
+
+    <!-- START -->
+    <div class="card" style="width: 18rem">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><strong>Order Total: </strong>GHS 120</li>
+        <li class="list-group-item"><strong>Amount Paid: </strong>GHS 100</li>
+        <li class="list-group-item"><strong>Discount: </strong>GHS 100</li>
+        <li class="list-group-item"><strong>Date: </strong>Date</li>
+      </ul>
+    </div>
+    <!-- END -->
+  </body>
+</html>

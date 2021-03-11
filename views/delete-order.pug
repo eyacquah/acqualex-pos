@@ -1,0 +1,10 @@
+extends base
+
+block content
+
+    main.col-md-9.ml-sm-auto.col-lg-10.px-md-4(role='main')
+        h1= `Are you sure you want to delete this order by ${order.customer.name}?`
+        a.btn-primary.btn-lg(href='/dashboard/orders/all') Cancel
+        br
+        br
+        a.deleteOrder.btn-danger.btn-lg(data-id=order.id) Delete

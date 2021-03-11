@@ -1,0 +1,19 @@
+extends base
+
+block content
+
+    main.col-md-9.ml-sm-auto.col-lg-10.px-md-4(role='main')
+        .container
+            .py-5.text-center
+                h2 Add A Category
+            .row
+                .col-md-8.order-md-1
+                    form.categoryForm.needs-validation(novalidate='')
+                        .mb-3
+                            label(for='title') Name of Catergory
+                            .input-group
+                                input#title.form-control(type='text' placeholder='Name' required='')
+                                .invalid-feedback(style='width: 100%;')
+                                    | A Category Name is Required.
+                        button.btn.btn-primary.btn-lg.btn-block(type='submit') Save
+
