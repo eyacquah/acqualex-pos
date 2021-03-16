@@ -30,7 +30,7 @@ block content
                     | #{order.date}
                     br
                     br
-                    form.refundForm.needs-validation(data-branch=order.branch data-user=user.id)
+                    form.refundForm.needs-validation(data-branch=order.branch data-user=user.id data-order=order.id data-amount-paid=order.amountPaid data-total-amount=order.totalAmount data-customer=order.customer.id data-type=order.type)
                         .row
                             each product in order.products
                                 .input-group.mb-3
@@ -44,9 +44,9 @@ block content
                         
                         h6 Enter Amount Refunded: 
                         .mb-3
-                            label(for='totalAmountRefunded')
+                            label(for='totalRefund')
                             .input-group
-                                input#totalAmountRefunded.form-control(type='number' placeholder='0' required='' min=`0` max=`${order.totalAmount}`)
+                                input#totalRefund.form-control(type='number' placeholder='0' required='' min=`0` max=`${order.totalAmount}`)
                                 .invalid-feedback(style='width: 100%;')
                                     | A Refund Amount is Required.
                         button.btn.btn-danger.btn-lg.btn-block(type='submit')

@@ -67,12 +67,8 @@ const orderSchema = new mongoose.Schema({
         type: {
           type: mongoose.Schema.ObjectId,
           ref: "Product",
-          required: [true, "A refund must have at least one product"],
         },
-        quantity: {
-          type: Number,
-          required: [true, "An ordered product must have a quantity"],
-        },
+        quantity: Number,
         amountRefunded: Number,
       },
     ],
@@ -84,7 +80,6 @@ const orderSchema = new mongoose.Schema({
     user: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
-      required: [true, "A refund must be created by a user"],
     },
   },
   notes: [
@@ -104,6 +99,10 @@ orderSchema.pre(/^find/, function (next) {
     .populate({
       path: "user",
       select: "-branch -email -phoneNumber -photo -role -__v",
+    })
+    .populate({
+      path: "refund.products.type",
+      select: "title price priceDiscount",
     })
     .populate({
       path: "products.type",

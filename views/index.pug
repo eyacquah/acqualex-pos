@@ -6,24 +6,24 @@ block content
         .card-deck
             .card.h-75.d-inline-block.border-dark
                 .card-body
-                    h5.card-title GHS 12,000
+                    h5.card-title= `GHS ${total || 0}`
                     h6.card-subtitle.mb-2.text-muted Total Sales
-                    p.card-text Text
+                    p.card-text Today
             .card.h-75.d-inline-block.border-dark
                 .card-body
-                    h5.card-title GHS 12,000
-                    h6.card-subtitle.mb-2.text-muted Total Sales
-                    p.card-text Text
-            .card.h-75.d-inline-block.border-dark
-                .card-body
-                    h5.card-title GHS 12,000
-                    h6.card-subtitle.mb-2.text-muted Total Sales
-                    p.card-text Text
-            .card.h-75.d-inline-block.border-dark
-                .card-body
-                    h5.card-title GHS 12,000
-                    h6.card-subtitle.mb-2.text-muted Total Sales
-                    p.card-text Text
+                    h5.card-title= `GHS ${totalRefunds || 0}`
+                    h6.card-subtitle.mb-2.text-muted Total Refunds
+                    p.card-text Today
+            //- .card.h-75.d-inline-block.border-dark
+            //-     .card-body
+            //-         h5.card-title GHS 12,000
+            //-         h6.card-subtitle.mb-2.text-muted Total Sales
+            //-         p.card-text Text
+            //- .card.h-75.d-inline-block.border-dark
+            //-     .card-body
+            //-         h5.card-title GHS 12,000
+            //-         h6.card-subtitle.mb-2.text-muted Total Sales
+            //-         p.card-text Text
         br
         br
         br
@@ -35,54 +35,53 @@ block content
                         tr
                             th(scope='col') Order Number
                             th(scope='col') Date
-                            th(scope='col') Customer Name
-                            th(scope='col') Amount Paid
-                            th(scope='col') Refund Total
-                            th(scope='col') Handle
+                            th(scope='col') Customer
+                            th(scope='col') Order Total
+                            th(scope='col') Amount Owed
+                            th(scope='col') Total Refund
+                            th(scope='col') Edit
                     tbody
-                        tr
-                            th(scope='row') GH-10G2A
-                            td June 15, 2021
-                            td Mark Thompson
-                            td GHS 2180
-                            td GHS
-                        tr
-                            th(scope='row') 2
-                            td Jacob
-                            td Thornton
-                            td @fat
-                        tr
-                            th(scope='row') 3
-                            td Larry
-                            td the Bird
-                            td @twitter
+                        each order in orders
+                            tr
+                                td= order.orderNum
+                                td= order.date
+                                td= order.customer.name
+                                td= `GHS ${order.totalAmount}`
+                                td= `GHS ${order.totalAmount - order.amountPaid}`
+                                td= `GHS ${order.refund.totalAmountRefunded || '0'}`
+                                td
+                                    a.btn-sm.btn-danger(href=`/admin/orders/${order.id}/refund`) Refund
+                                td
+                                    a.btn-sm.btn-light(href=`/admin/orders/${order.id}`) Edit
+                                td 
+                                    a.btn-sm-btn-dark(href=`/admin/orders/${order.id}/invoice`) Invoice
         br
         br
         br
-        section
-            h2 Refunds
-            .table-responsive
-                table.table.table-hover
-                    thead.thead-dark
-                        tr
-                            th(scope='col') #
-                            th(scope='col') First
-                            th(scope='col') Last
-                            th(scope='col') Handle
-                    tbody
-                        tr
-                            th(scope='row') 1
-                            td Mark
-                            td Otto
-                            td @mdo
-                        tr
-                            th(scope='row') 2
-                            td Jacob
-                            td Thornton
-                            td @fat
-                        tr
-                            th(scope='row') 3
-                            td Larry
-                            td the Bird
-                            td @twitter
+        //- section
+        //-     h2 Refunds
+        //-     .table-responsive
+        //-         table.table.table-hover
+        //-             thead.thead-dark
+        //-                 tr
+        //-                     th(scope='col') #
+        //-                     th(scope='col') First
+        //-                     th(scope='col') Last
+        //-                     th(scope='col') Handle
+        //-             tbody
+        //-                 tr
+        //-                     th(scope='row') 1
+        //-                     td Mark
+        //-                     td Otto
+        //-                     td @mdo
+        //-                 tr
+        //-                     th(scope='row') 2
+        //-                     td Jacob
+        //-                     td Thornton
+        //-                     td @fat
+        //-                 tr
+        //-                     th(scope='row') 3
+        //-                     td Larry
+        //-                     td the Bird
+        //-                     td @twitter
 

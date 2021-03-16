@@ -1,3 +1,6 @@
+import axios from "axios";
+import { showAlert } from "./alerts";
+
 const refundTotalEl = document.querySelector(".refundTotal");
 const numOfItemsEl = document.querySelector(".numOfItems");
 const refundItemsContainer = document.querySelector(".refundItemsContainer");
@@ -91,9 +94,66 @@ function setRefundCartItems(el) {
   renderRefundCartHtml();
 }
 
-// const createRefund = (form) => {
-//   const data = {
-//     products: [],
-//     total: 0,
-//   };
-// };
+// 1. Order ID
+// 2. Products
+// 3. User ID
+
+export const createRefund = async (form) => {
+  if (
+    +form.totalRefund.value.trim() < 1 ||
+    +form.totalRefund.value.trim() !== refund.total
+  )
+    return showAlert("error", "Enter A Valid Amount");
+
+  const data = {
+    refund: {
+      products: [],
+      totalAmountRefunded: 0,
+      user: "",
+    },
+    branch: "",
+    customer: "",
+    type: "",
+    amountPaid: 0,
+    totalAmount: 0,
+  };
+
+  data.refund.products = refund.items.map((item) => {
+    const product = {};
+    product.type = item.id;
+    product.quantity = item.quantity;
+    product.amountRefunded = item.subtotal;
+
+    return product;
+  });
+
+  data.refund.totalAmountRefunded = refund.total;
+  data.refund.user = form.dataset.user;
+  data.branch = form.dataset.branch;
+  data.customer = form.dataset.customer;
+  data.type = form.dataset.type;
+  data.totalAmount = +form.dataset.totalAmount - refund.total;
+  data.amountPaid =
+    form.dataset.type !== "credit"
+      ? +form.dataset.amountPaid - refund.total
+      : +form.dataset.amountPaid;
+
+  // console.log(data);
+
+  try {
+    showAlert("success", "Creating Refund");
+
+    const res = await axios.patch(
+      `/api/v1/orders/${form.dataset.order}/refund`,
+      data
+    );
+
+    if (res.data.status === "success") {
+      showAlert("success", "Refund Created Successfully");
+      window.location.href = `${window.location.origin}/admin/orders/all`;
+    }
+  } catch (err) {
+    console.error(err);
+    showAlert("error", "Something Went Wrong");
+  }
+};

@@ -17,6 +17,7 @@ block content
                         th Customer
                         th Order Total
                         th Amount Owed
+                        th Total Refund
                         th Edit
                 tbody
                     each order in orders
@@ -26,5 +27,10 @@ block content
                             td= order.customer.name
                             td= `GHS ${order.totalAmount}`
                             td= `GHS ${order.totalAmount - order.amountPaid}`
+                            td= `GHS ${order.refund.totalAmountRefunded || '0'}`
                             td
-                                a(href=`/admin/orders/${order.id}`) Edit
+                                a.btn-sm.btn-danger(href=`/admin/orders/${order.id}/refund`) Refund
+                            td
+                                a.btn-sm.btn-light(href=`/admin/orders/${order.id}`) Edit
+                            td 
+                                a.btn-sm-btn-dark(href=`/admin/orders/${order.id}/invoice`) Invoice

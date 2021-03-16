@@ -79,6 +79,7 @@ export const addProductsToBranch = async (form) => {
 
   checkboxEls.forEach((el) => {
     el.checked ? checkedProductIds.unshift(el.dataset.id) : "";
+    // checkedProductIds.unshift(el.dataset.id);
   });
 
   const otherProductEls = document.querySelectorAll(".otherProducts");
@@ -99,6 +100,7 @@ export const addProductsToBranch = async (form) => {
 
     product.type = el.dataset.id;
     product.stockQuantity = +el.value.trim();
+    // product.stockQuantity = 10;
 
     branch.products.push(product);
 
@@ -122,7 +124,7 @@ export const addProductsToBranch = async (form) => {
 
 const updateBranch = async (data, id) => {
   try {
-    showAlert("success", "Branch Updating...");
+    showAlert("success", "Branch Updating");
 
     const res = await axios({
       method: "PATCH",
@@ -131,7 +133,7 @@ const updateBranch = async (data, id) => {
     });
 
     if (res.data.status === "success") {
-      showAlert("success", "Branch Updated!");
+      showAlert("success", "Branch Updated Successfully!");
 
       window.location.href = `${window.location.origin}/admin/branches/${res.data.data.slug}`;
     }

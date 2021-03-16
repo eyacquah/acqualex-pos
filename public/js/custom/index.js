@@ -1,4 +1,4 @@
-import regeneratorRuntime from "regenerator-runtime";
+import regeneratorRuntime, { async } from "regenerator-runtime";
 
 import { login, logout } from "./login";
 
@@ -16,7 +16,7 @@ import {
 } from "./order";
 import { renderDeliveryHtml, renderDiscountHtml, cart } from "./cart";
 
-import { addToRefundCart, refund } from "./refund";
+import { addToRefundCart, refund, createRefund } from "./refund";
 
 const loginForm = document.querySelector(".loginForm");
 const logoutBtn = document.querySelector(".logout");
@@ -93,6 +93,7 @@ function handleGetAllProductsAndCustomers(form) {
   data.products = products;
   data.customers = customers;
   orderDetails.user = form.dataset.user;
+
   orderDetails.branch = form.dataset.branch;
 }
 
@@ -112,6 +113,11 @@ async function handleOrderForm(e) {
 async function handleOrderUpdateForm(e) {
   e.preventDefault();
   await updateOrder(this);
+}
+
+async function handleRefundForm(e) {
+  e.preventDefault();
+  await createRefund(this);
 }
 
 // Event Listeners
@@ -160,4 +166,5 @@ if (refundForm) {
   refundCheckboxEls.forEach((el) =>
     el.addEventListener("click", addToRefundCart)
   );
+  refundForm.addEventListener("submit", handleRefundForm);
 }

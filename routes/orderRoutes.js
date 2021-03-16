@@ -9,6 +9,8 @@ router
   .get(orderController.getAllOrders)
   .post(orderController.createOrder);
 
+router.route("/:id/refund").patch(orderController.createRefund);
+
 router
   .route("/:id")
   .get(orderController.getOrder)

@@ -1,5 +1,5 @@
 nav.navbar.navbar-dark.sticky-top.bg-dark.flex-md-nowrap.p-0.shadow
-  a.navbar-brand.col-md-3.col-lg-2.mr-0.px-3(href='#') ACQUALEX ENTERPRISE
+  a.navbar-brand.col-md-3.col-lg-2.mr-0.px-3(href='/admin') ACQUALEX ENTERPRISE
   button.navbar-toggler.position-absolute.d-md-none.collapsed(type='button' data-toggle='collapse' data-target='#sidebarMenu' aria-controls='sidebarMenu' aria-expanded='false' aria-label='Toggle navigation')
     span.navbar-toggler-icon
   input.form-control.form-control-dark.w-100(type='text' placeholder='Search' aria-label='Search')
@@ -12,7 +12,7 @@ nav.navbar.navbar-dark.sticky-top.bg-dark.flex-md-nowrap.p-0.shadow
       .sidebar-sticky.pt-3
         ul.nav.flex-column
           li.nav-item
-            a.nav-link.active(href='#')
+            a.nav-link.active(href='/admin')
               i.house-door-fill
               span(data-feather='home')
               |                   Dashboard 
@@ -33,31 +33,7 @@ nav.navbar.navbar-dark.sticky-top.bg-dark.flex-md-nowrap.p-0.shadow
             a.nav-link(href='/admin/branches/all')
               span(data-feather='bar-chart-2')
               |                  Branches
-          li.nav-item
-            a.nav-link(href='#')
-              span(data-feather='layers')
-              |                   Integrations
-        h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted
-          span Saved reports
-          a.d-flex.align-items-center.text-muted(href='#' aria-label='Add a new report')
-            span(data-feather='plus-circle')
-        ul.nav.flex-column.mb-2
-          li.nav-item
-            a.nav-link(href='#')
-              span(data-feather='file-text')
-              |                   Current month
-          li.nav-item
-            a.nav-link(href='#')
-              span(data-feather='file-text')
-              |                   Last quarter
-          li.nav-item
-            a.nav-link(href='#')
-              span(data-feather='file-text')
-              |                   Social engagement
-          li.nav-item
-            a.nav-link(href='#')
-              span(data-feather='file-text')
-              |                   Year-end sale
+       
     main.col-md-9.ml-sm-auto.col-lg-10.px-md-4(role='main')
       .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
         h1.h2= `Hello ${user.name.split(' ')[0]}`

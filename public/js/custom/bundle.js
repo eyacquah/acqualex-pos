@@ -3404,7 +3404,7 @@ var addProductsToBranch = /*#__PURE__*/function () {
             checkedProductIds = [];
             checkboxEls = document.querySelectorAll(".checkbox");
             checkboxEls.forEach(function (el) {
-              el.checked ? checkedProductIds.unshift(el.dataset.id) : "";
+              el.checked ? checkedProductIds.unshift(el.dataset.id) : ""; // checkedProductIds.unshift(el.dataset.id);
             });
             otherProductEls = document.querySelectorAll(".otherProducts");
             otherProductEls.forEach(function (el) {
@@ -3420,7 +3420,8 @@ var addProductsToBranch = /*#__PURE__*/function () {
                 stockQuantity: 0
               };
               product.type = el.dataset.id;
-              product.stockQuantity = +el.value.trim();
+              product.stockQuantity = +el.value.trim(); // product.stockQuantity = 10;
+
               branch.products.push(product); // UPDATE WAREHOUSE
 
               var warehouseProduct = {
@@ -3475,7 +3476,7 @@ var updateBranch = /*#__PURE__*/function () {
         switch (_context4.prev = _context4.next) {
           case 0:
             _context4.prev = 0;
-            (0, _alerts.showAlert)("success", "Branch Updating...");
+            (0, _alerts.showAlert)("success", "Branch Updating");
             _context4.next = 4;
             return (0, _axios.default)({
               method: "PATCH",
@@ -3487,7 +3488,7 @@ var updateBranch = /*#__PURE__*/function () {
             res = _context4.sent;
 
             if (res.data.status === "success") {
-              (0, _alerts.showAlert)("success", "Branch Updated!");
+              (0, _alerts.showAlert)("success", "Branch Updated Successfully!");
               window.location.href = "".concat(window.location.origin, "/admin/branches/").concat(res.data.data.slug);
             }
 
@@ -3736,7 +3737,12 @@ var orderDetails = {
   type: "",
   discount: 0,
   deliveryFee: 0,
-  subtotal: 0
+  subtotal: 0 // refund: {
+  //   products: [],
+  //   totalAmountRefunded: 0,
+  //   user: "",
+  // },
+
 };
 exports.orderDetails = orderDetails;
 var productElContainer = document.querySelector(".productSearchResults");
@@ -3829,7 +3835,9 @@ var completeOrder = /*#__PURE__*/function () {
             orderDetails.type = form.orderType.value.toLowerCase();
             orderDetails.deliveryFee = _cart.cart.deliveryFee;
             orderDetails.subtotal = _cart.cart.subtotal;
-            orderDetails.discount = _cart.cart.discount;
+            orderDetails.discount = _cart.cart.discount; // orderDetails.refund.user = orderDetails.user;
+            // return console.log(orderDetails);
+
             _context.next = 11;
             return createOrder(orderDetails);
 
@@ -3868,7 +3876,7 @@ var createOrder = /*#__PURE__*/function () {
 
             if (res.data.status === "success") {
               (0, _alerts.showAlert)("success", "Order Created!");
-              window.location.href = "".concat(window.location.origin, "/admin");
+              window.location.href = "".concat(window.location.origin, "/admin/orders/all");
             }
 
             _context2.next = 12;
@@ -3923,7 +3931,7 @@ var updateOrder = /*#__PURE__*/function () {
 
             if (res.data.status === "success") {
               (0, _alerts.showAlert)("success", "Order Updated Successfully");
-              window.location.href = "".concat(window.location.origin, "/admin");
+              window.location.href = "".concat(window.location.origin, "/admin/orders/all");
             }
 
             _context3.next = 19;
@@ -3956,7 +3964,18 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.addToRefundCart = addToRefundCart;
-exports.refund = void 0;
+exports.createRefund = exports.refund = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _alerts = require("./alerts");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 var refundTotalEl = document.querySelector(".refundTotal");
 var numOfItemsEl = document.querySelector(".numOfItems");
 var refundItemsContainer = document.querySelector(".refundItemsContainer");
@@ -4042,13 +4061,90 @@ function setRefundCartItems(el) {
   item.subtotal = item.quantity * item.price;
   refund.items.push(item);
   renderRefundCartHtml();
-} // const createRefund = (form) => {
-//   const data = {
-//     products: [],
-//     total: 0,
-//   };
-// };
-},{}],"index.js":[function(require,module,exports) {
+} // 1. Order ID
+// 2. Products
+// 3. User ID
+
+
+var createRefund = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(form) {
+    var data, res;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            if (!(+form.totalRefund.value.trim() < 1 || +form.totalRefund.value.trim() !== refund.total)) {
+              _context.next = 2;
+              break;
+            }
+
+            return _context.abrupt("return", (0, _alerts.showAlert)("error", "Enter A Valid Amount"));
+
+          case 2:
+            data = {
+              refund: {
+                products: [],
+                totalAmountRefunded: 0,
+                user: ""
+              },
+              branch: "",
+              customer: "",
+              type: "",
+              amountPaid: 0,
+              totalAmount: 0
+            };
+            data.refund.products = refund.items.map(function (item) {
+              var product = {};
+              product.type = item.id;
+              product.quantity = item.quantity;
+              product.amountRefunded = item.subtotal;
+              return product;
+            });
+            data.refund.totalAmountRefunded = refund.total;
+            data.refund.user = form.dataset.user;
+            data.branch = form.dataset.branch;
+            data.customer = form.dataset.customer;
+            data.type = form.dataset.type;
+            data.totalAmount = +form.dataset.totalAmount - refund.total;
+            data.amountPaid = form.dataset.type !== "credit" ? +form.dataset.amountPaid - refund.total : +form.dataset.amountPaid; // console.log(data);
+
+            _context.prev = 11;
+            (0, _alerts.showAlert)("success", "Creating Refund");
+            _context.next = 15;
+            return _axios.default.patch("/api/v1/orders/".concat(form.dataset.order, "/refund"), data);
+
+          case 15:
+            res = _context.sent;
+
+            if (res.data.status === "success") {
+              (0, _alerts.showAlert)("success", "Refund Created Successfully");
+              window.location.href = "".concat(window.location.origin, "/admin/orders/all");
+            }
+
+            _context.next = 23;
+            break;
+
+          case 19:
+            _context.prev = 19;
+            _context.t0 = _context["catch"](11);
+            console.error(_context.t0);
+            (0, _alerts.showAlert)("error", "Something Went Wrong");
+
+          case 23:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[11, 19]]);
+  }));
+
+  return function createRefund(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+exports.createRefund = createRefund;
+},{"axios":"../../../node_modules/axios/index.js","./alerts":"alerts.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4056,7 +4152,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.productInputEl = void 0;
 
-var _regeneratorRuntime = _interopRequireDefault(require("regenerator-runtime"));
+var _regeneratorRuntime = _interopRequireWildcard(require("regenerator-runtime"));
 
 var _login = require("./login");
 
@@ -4074,7 +4170,9 @@ var _cart = require("./cart");
 
 var _refund = require("./refund");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -4358,8 +4456,7 @@ function _handleOrderForm() {
 
 function handleOrderUpdateForm(_x11) {
   return _handleOrderUpdateForm.apply(this, arguments);
-} // Event Listeners
-
+}
 
 function _handleOrderUpdateForm() {
   _handleOrderUpdateForm = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.default.mark(function _callee11(e) {
@@ -4379,6 +4476,31 @@ function _handleOrderUpdateForm() {
     }, _callee11, this);
   }));
   return _handleOrderUpdateForm.apply(this, arguments);
+}
+
+function handleRefundForm(_x12) {
+  return _handleRefundForm.apply(this, arguments);
+} // Event Listeners
+
+
+function _handleRefundForm() {
+  _handleRefundForm = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.default.mark(function _callee12(e) {
+    return _regeneratorRuntime.default.wrap(function _callee12$(_context12) {
+      while (1) {
+        switch (_context12.prev = _context12.next) {
+          case 0:
+            e.preventDefault();
+            _context12.next = 3;
+            return (0, _refund.createRefund)(this);
+
+          case 3:
+          case "end":
+            return _context12.stop();
+        }
+      }
+    }, _callee12, this);
+  }));
+  return _handleRefundForm.apply(this, arguments);
 }
 
 if (loginForm) loginForm.addEventListener("submit", handleLogin);
@@ -4422,6 +4544,7 @@ if (refundForm) {
   refundCheckboxEls.forEach(function (el) {
     return el.addEventListener("click", _refund.addToRefundCart);
   });
+  refundForm.addEventListener("submit", handleRefundForm);
 }
 },{"regenerator-runtime":"../../../node_modules/regenerator-runtime/runtime.js","./login":"login.js","./category":"category.js","./products":"products.js","./customers":"customers.js","./branch":"branch.js","./order":"order.js","./cart":"cart.js","./refund":"refund.js"}]},{},["index.js"], null)
 //# sourceMappingURL=/bundle.js.map

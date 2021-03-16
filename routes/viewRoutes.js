@@ -39,6 +39,7 @@ router.get("/branches/:slug", viewsController.getBranchDetail);
 router.get("/orders/add", viewsController.getOrderForm);
 router.get("/orders/all", viewsController.getAllOrders);
 router.get("/orders/:id/refund", viewsController.createRefund);
+router.get("/orders/:id/invoice", viewsController.getOrderInvoice);
 router.get("/orders/:id", viewsController.getOrderDetail);
 
 module.exports = router;

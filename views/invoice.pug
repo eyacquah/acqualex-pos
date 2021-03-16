@@ -1,0 +1,93 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet' href='/css/invoice.css')
+    title Document
+  body
+    #invoice-POS
+      center#top
+        .logo
+        .info
+          h2 Acqualex Enterprise
+        //-   button.btn-sm.btn-primary(onclick='window.print()') Print this page
+        // End Info
+        // End InvoiceTop
+        #mid
+          .info
+            h2 Contact Info
+            p
+              | Address : Banana Inn Sharp Curve, Accra 
+              br
+              |             Email : aacqual@yahoo.com 
+              br
+              |             Phone : 0244-696-441
+              br
+        // End Invoice Mid
+        #bot
+          #table
+            table
+              tbody
+                tr.tabletitle
+                  td.item
+                    h2 Item
+                  td.Hours
+                    h2 Qty
+                  td.Rate
+                    h2 Sub Total
+                each product in order.products
+                    //- PRODUCTS
+                    tr.service
+                    td.tableitem
+                        p.itemtext=product.type.title
+                    td.tableitem
+                        p.itemtext= product.orderQuantity
+                    td.tableitem
+                        p.itemtext= `GHS ${product.purchasePrice * product.orderQuantity}`
+                //- DELIVERY
+                tr.tabletitle
+                  td
+                  td.Rate
+                    h2 Delivery fee
+                  td.payment
+                    h2= `GHS ${order.deliveryFee || 0}` 
+
+                //- DISCOUNT
+                tr.tabletitle
+                  td
+                  td.Rate
+                    h2.text-success Discount
+                  td.payment
+                    h2= `GHS ${order.discount || 0}`
+
+                tr.tabletitle
+                  td
+                  td.Rate
+                    h2 Order Total
+                  td.payment
+                    h2= `GHS ${order.totalAmount}`
+                
+                tr.tabletitle
+                  td
+                  td.Rate
+                    h2 Amount Paid
+                  td.payment
+                    h2= `GHS ${order.amountPaid}`
+
+                tr.tabletitle
+                  td
+                  td.Rate
+                    h2 Amount Owed
+                  td.payment
+                    h2= `GHS ${order.totalAmount - order.amountPaid}`
+          // End Table
+          #legalcopy
+            p.legal
+              strong Thank you for your business!
+            //-   |   Payment is expected
+            //-   |             within 31 days; please process this invoice within that time. There
+            //-   |             will be a 5% interest charge per month on late invoices.
+        // End InvoiceBot
+        // End Invoice

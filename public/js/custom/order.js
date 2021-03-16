@@ -21,6 +21,11 @@ export const orderDetails = {
   discount: 0,
   deliveryFee: 0,
   subtotal: 0,
+  // refund: {
+  //   products: [],
+  //   totalAmountRefunded: 0,
+  //   user: "",
+  // },
 };
 
 const productElContainer = document.querySelector(".productSearchResults");
@@ -130,6 +135,8 @@ export const completeOrder = async (form) => {
   orderDetails.deliveryFee = cart.deliveryFee;
   orderDetails.subtotal = cart.subtotal;
   orderDetails.discount = cart.discount;
+  // orderDetails.refund.user = orderDetails.user;
+  // return console.log(orderDetails);
 
   return await createOrder(orderDetails);
 };
@@ -141,7 +148,7 @@ const createOrder = async (data) => {
 
     if (res.data.status === "success") {
       showAlert("success", "Order Created!");
-      window.location.href = `${window.location.origin}/admin`;
+      window.location.href = `${window.location.origin}/admin/orders/all`;
     }
   } catch (err) {
     console.error(err);
@@ -174,7 +181,7 @@ export const updateOrder = async (form) => {
 
     if (res.data.status === "success") {
       showAlert("success", "Order Updated Successfully");
-      window.location.href = `${window.location.origin}/admin`;
+      window.location.href = `${window.location.origin}/admin/orders/all`;
     }
   } catch (err) {
     console.error(err);

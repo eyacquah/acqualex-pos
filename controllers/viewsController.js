@@ -37,8 +37,33 @@ exports.getLoginTemplate = async (req, res, next) => {
 };
 
 exports.getIndex = catchAsync(async (req, res, next) => {
+  let date = new Date(Date.now());
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  };
+
+  date = date.toLocaleString("en-GB", options);
+  // console.log(date);
+
+  const orders = await Order.find({ date: date });
+
+  let total = 0;
+  let totalRefunds = 0;
+
+  orders.forEach((order) => {
+    total += order.totalAmount;
+    totalRefunds += order.refund.totalAmountRefunded
+      ? order.refund.totalAmountRefunded
+      : 0;
+  });
+
   res.status(200).render("index", {
     title: "Company Name",
+    orders,
+    total,
+    totalRefunds,
   });
 });
 
@@ -161,6 +186,12 @@ exports.getAllOrders = catchAsync(async (req, res, next) => {
   res.status(200).render("order-list", {
     orders,
   });
+});
+
+exports.getOrderInvoice = catchAsync(async (req, res, next) => {
+  const order = await Order.findById(req.params.id);
+
+  res.status(200).render("invoice", { order });
 });
 
 exports.getOrderDetail = catchAsync(async (req, res, next) => {

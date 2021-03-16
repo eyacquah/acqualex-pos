@@ -18,14 +18,9 @@ const productSchema = new mongoose.Schema(
       default: Date.now(),
       // select: false,
     },
-    
     category: {
       type: mongoose.Schema.ObjectId,
       ref: "Category",
-    },
-    isVisible: {
-      type: Boolean,
-      default: true,
     },
     stockQuantity: {
       type: Number,
