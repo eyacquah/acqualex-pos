@@ -8,8 +8,8 @@
     "dev": "nodemon server.js",
     "start:prod": "SET NODE_ENV=production&& nodemon server.js",
     "debug": "ndb server.js",
-    "watch": "parcel watch --no-hmr ./public/js/custom/index.js --out-dir ./public/js/custom --out-file bundle.js",
-    "build": "parcel build ./public/js/custom/index.js --out-dir ./public/js/custom --out-file bundle.js"
+    "watch:js": "parcel watch --no-hmr ./public/js/custom/index.js --out-dir ./public/js/custom --out-file bundle.js",
+    "build:js": "parcel build ./public/js/custom/index.js --out-dir ./public/js/custom --out-file bundle.js"
   },
   "repository": {
     "type": "git",
