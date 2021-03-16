@@ -5,9 +5,6 @@ export const login = async (form) => {
     const email = form.email.value;
     const password = form.password.value;
 
-    console.log(email, password);
-    // return;
-
     const res = await axios({
       method: "POST",
       url: "/api/v1/users/login",
@@ -17,6 +14,7 @@ export const login = async (form) => {
       },
     });
 
+    console.log(res);
     if (res.data.status === "success") {
       location.assign("/admin");
     }
