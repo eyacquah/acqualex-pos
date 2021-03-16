@@ -80,6 +80,10 @@ app.use((req, res, next) => {
 
 // MOUNTING ROUTERS
 
+app.use("/", (req, res, next) => {
+  res.status(200).render("login");
+});
+
 app.use("/admin", viewRouter);
 app.use("/api/v1/companies", companyRouter);
 app.use("/api/v1/branches", branchRouter);
