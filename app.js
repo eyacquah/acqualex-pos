@@ -80,7 +80,7 @@ app.use((req, res, next) => {
 
 // MOUNTING ROUTERS
 
-app.use("/", (req, res, next) => {
+app.route("/", (req, res, next) => {
   res.status(200).render("login");
 });
 
