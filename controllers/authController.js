@@ -68,7 +68,6 @@ exports.signup = catchAsync(async (req, res, next) => {
 /// LOGIN
 
 exports.login = catchAsync(async (req, res, next) => {
-  console.log("OBVIOUSSSS", req.body);
   const { email, password } = req.body;
 
   // 1. Check if email and password was recieved

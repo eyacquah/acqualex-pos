@@ -14,7 +14,6 @@ export const login = async (form) => {
       },
     });
 
-    console.log(res);
     if (res.data.status === "success") {
       location.assign("/admin");
     }

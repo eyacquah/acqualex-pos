@@ -1,93 +1,112 @@
 doctype html
 html(lang='en')
   head
-    meta(charset='UTF-8')
-    meta(http-equiv='X-UA-Compatible' content='IE=edge')
-    meta(name='viewport' content='width=device-width, initial-scale=1.0')
-    link(rel='stylesheet' href='/css/invoice.css')
-    title Document
-  body
-    #invoice-POS
-      center#top
-        .logo
-        .info
-          h2 Acqualex Enterprise
-        //-   button.btn-sm.btn-primary(onclick='window.print()') Print this page
-        // End Info
-        // End InvoiceTop
-        #mid
-          .info
-            h2 Contact Info
-            p
-              | Address : Banana Inn Sharp Curve, Accra 
-              br
-              |             Email : aacqual@yahoo.com 
-              br
-              |             Phone : 0244-696-441
-              br
-        // End Invoice Mid
-        #bot
-          #table
-            table
-              tbody
-                tr.tabletitle
-                  td.item
-                    h2 Item
-                  td.Hours
-                    h2 Qty
-                  td.Rate
-                    h2 Sub Total
-                each product in order.products
-                    //- PRODUCTS
-                    tr.service
-                    td.tableitem
-                        p.itemtext=product.type.title
-                    td.tableitem
-                        p.itemtext= product.orderQuantity
-                    td.tableitem
-                        p.itemtext= `GHS ${product.purchasePrice * product.orderQuantity}`
-                //- DELIVERY
-                tr.tabletitle
-                  td
-                  td.Rate
-                    h2 Delivery fee
-                  td.payment
-                    h2= `GHS ${order.deliveryFee || 0}` 
-
-                //- DISCOUNT
-                tr.tabletitle
-                  td
-                  td.Rate
-                    h2.text-success Discount
-                  td.payment
-                    h2= `GHS ${order.discount || 0}`
-
-                tr.tabletitle
-                  td
-                  td.Rate
-                    h2 Order Total
-                  td.payment
-                    h2= `GHS ${order.totalAmount}`
-                
-                tr.tabletitle
-                  td
-                  td.Rate
-                    h2 Amount Paid
-                  td.payment
-                    h2= `GHS ${order.amountPaid}`
-
-                tr.tabletitle
-                  td
-                  td.Rate
-                    h2 Amount Owed
-                  td.payment
-                    h2= `GHS ${order.totalAmount - order.amountPaid}`
-          // End Table
-          #legalcopy
-            p.legal
-              strong Thank you for your business!
-            //-   |   Payment is expected
-            //-   |             within 31 days; please process this invoice within that time. There
-            //-   |             will be a 5% interest charge per month on late invoices.
-        // End InvoiceBot
-        // End Invoice
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description' content='')
+    meta(name='author' content='Mark Otto, Jacob Thornton, and Bootstrap contributors')
+    meta(name='generator' content='Hugo 0.80.0')
+    title Acqualex Receipt
+    link(rel='canonical' href='https://getbootstrap.com/docs/4.6/examples/offcanvas/')
+    // Bootstrap core CSS
+    link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css' integrity='sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l' crossorigin='anonymous')
+    style.
+      .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      }
+      @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+      }
+      }
+      .small {
+      font-size: 20px;
+      }
+    // Custom styles for this template
+    link(href='/css/reciept.css' rel='stylesheet')
+  body.bg-light
+    //- nav.navbar.navbar-expand-lg.fixed-top.navbar-dark.bg-dark
+    //-   a.navbar-brand.mr-auto.mr-lg-0(href='#') Acqualex Receipt
+    //-   button.navbar-toggler.p-0.border-0(type='button' data-toggle='offcanvas')
+    //-     span.navbar-toggler-icon
+    //-   #navbarsExampleDefault.navbar-collapse.offcanvas-collapse.my-2.my-lg-0.text-right(style='float: right')
+    //-   .form-inline.my-2.my-lg-0
+    //-     ul.navbar-nav.mr-auto
+    //-       li.nav-item
+    //-         a.nav-link(href='#') Print
+    //-       li.nav-item
+    //-         a.nav-link(href='#') Save
+    main.container(role='main')
+      .d-flex.align-items-center.p-3.my-3.bg-purple.rounded.shadow-sm
+        .lh-100
+          h2.mb-0.text-dark.lh-100 Acqualex Receipt
+          small
+            | Importers and suppliers of Glass, Aluminium Profile & Accessories,
+            | Photo Frame & General Goods
+          br
+          small
+            | P.O.Box AC Accra Tel: 0302320531 | 0302674625. Mobile:
+            | 024469441
+          br
+          small
+            | Location: Banana Inn Sharp Curve Mamprobi & Near Railways Opposite
+            | National Investment Bank
+      .my-3.p-3.bg-white.rounded.shadow-sm
+        h4.border-bottom.border-gray.pb-2.mb-0(style='text-align: center')
+          | Receipt
+        .media.text-muted.pt-3
+          p.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
+            strong.d-block.text-gray-dark= `Order No: ${order.orderNum}`
+          p.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray(style='text-align: center')
+            strong.d-block.text-gray-dark= `Customer: ${order.customer.name}`
+          p.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray.text-right
+            strong.d-block.text-gray-dark= order.date
+      .my-3.p-3.bg-white.rounded.shadow-sm
+        .table-responsive
+          table.table.table-striped.table-sm.border-bottom.border-gray.small
+            thead
+              tr
+                th.text-gray-dark Qty.
+                th Product
+                th Subtotal
+            tbody
+              each product in order.products
+                tr
+                  td= product.orderQuantity
+                  td= product.type.title
+                  td= `GHS ${product.purchasePrice * product.orderQuantity}`
+            
+      .my-3.p-3.bg-white.rounded.shadow-sm
+        .media.text-muted.pt-3
+          p.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
+            strong.d-block.text-gray-dark= `Subtotal: GHS ${order.subtotal}`
+        .media.text-muted.pt-3
+          p.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
+            strong.d-block.text-gray-dark= `Delivery Fee: GHS ${order.deliveryFee}`
+        .media.text-muted.pt-3
+          p.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
+            strong.d-block.text-gray-dark= `Discount: - GHS ${order.discount}`
+        //- .media.text-muted.pt-3
+        //-   p.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
+        //-     strong.d-block.text-gray-dark NHIS/VAT:
+        .media.text-muted.pt-3
+          p.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
+            strong.d-block.text-gray-dark= `Total: GHS ${order.totalAmount}`
+        .media.text-muted.pt-3
+          p.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
+            strong.d-block.text-gray-dark= `Paid: GHS ${order.amountPaid}`
+        .media.text-muted.pt-3
+          p.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
+            strong.d-block.text-gray-dark= `Balance: GHS ${order.totalAmount - order.amountPaid}`
+      .my-3.p-3.bg-white.rounded.shadow-sm
+        .media.text-muted.pt-3
+          p.media-body.pb-3.mb-0.small.lh-125.text-right
+            strong.d-block.text-gray-dark=` Cashier : ${order.user.name}`
+    script(src='https://code.jquery.com/jquery-3.5.1.slim.min.js' integrity='sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj' crossorigin='anonymous')
+    script(src='../assets/dist/js/bootstrap.bundle.min.js')
+    script(src='/js/reciept.js')
