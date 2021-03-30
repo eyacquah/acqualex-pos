@@ -102,7 +102,10 @@ html(lang='en')
             strong.d-block.text-gray-dark= `Paid: GHS ${order.amountPaid}`
         .media.text-muted.pt-3
           p.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
-            strong.d-block.text-gray-dark= `Balance: GHS ${order.totalAmount - order.amountPaid}`
+            strong.d-block.text-danger= `Balance: GHS ${order.totalAmount - order.amountPaid}`
+        .media.text-muted.pt-3
+          p.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
+            strong.d-block.text-danger= `Refund: GHS ${order.refund.totalAmountRefunded || 0}`
       .my-3.p-3.bg-white.rounded.shadow-sm
         .media.text-muted.pt-3
           p.media-body.pb-3.mb-0.small.lh-125.text-right
